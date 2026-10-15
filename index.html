@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mónica y sus Libros | Literatura del Mañana</title>
+    
+    <!-- Google Fonts: Chakra Petch / Michroma (Estilo Superellipse Ciberpunk) y Plus Jakarta Sans (Estilo Modern) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,600;0,700;1,700&family=Michroma&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyberPink: '#FF3483',
+                        cyberCyan: '#00E0BA',
+                        cyberYellow: '#FFCF00',
+                        cyberDark: '#08070C',
+                        cyberCard: '#0D0E15',
+                        cyberMuted: '#1a1b26'
+                    },
+                    fontFamily: {
+                        superellipse: ['Michroma', 'Chakra Petch', 'sans-serif'],
+                        chakra: ['Chakra Petch', 'sans-serif'],
+                        modern: ['"Plus Jakarta Sans"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Cyberpunk Styles -->
+    <style>
+        :root {
+            --color-primary: #FF3483;
+            --color-secondary: #00E0BA;
+            --color-accent: #FFCF00;
+            --color-bg: #08070C;
+            --color-card: #0D0E15;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: #E2E8F0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* 45 Degree Angle Cuts (Biselados) */
+        .cyber-clip {
+            clip-path: polygon(12px 0%, 100% 0%, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0% 100%, 0% 12px);
+        }
+
+        .cyber-clip-btn {
+            clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+        }
+
+        .cyber-clip-tag {
+            clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+        }
+
+        /* Perspective Grid */
+        .cyber-grid-bg {
+            background-image: 
+                linear-gradient(to right, rgba(0, 224, 186, 0.15) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 52, 131, 0.15) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .perspective-grid {
+            position: absolute;
+            bottom: 0;
+            left: -50%;
+            width: 200%;
+            height: 60%;
+            background-image: 
+                linear-gradient(rgba(0, 224, 186, 0.25) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 224, 186, 0.25) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: perspective(300px) rotateX(65deg);
+            transform-origin: bottom center;
+            mask-image: linear-gradient(to top, rgba(0,0,0,1) 10%, transparent 90%);
+            -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 10%, transparent 90%);
+            pointer-events: none;
+        }
+
+        /* Neon Glowing Shadows */
+        .neon-shadow-pink {
+            box-shadow: 0 0 15px rgba(255, 52, 131, 0.4), inset 0 0 15px rgba(255, 52, 131, 0.2);
+        }
+
+        .neon-shadow-cyan {
+            box-shadow: 0 0 15px rgba(0, 224, 186, 0.35), inset 0 0 10px rgba(0, 224, 186, 0.15);
+        }
+
+        .neon-shadow-yellow {
+            box-shadow: 0 0 20px rgba(255, 207, 0, 0.5);
+        }
+
+        .neon-text-pink {
+            text-shadow: 0 0 8px rgba(255, 52, 131, 0.8), 0 0 20px rgba(255, 52, 131, 0.4);
+        }
+
+        .neon-text-cyan {
+            text-shadow: 0 0 8px rgba(0, 224, 186, 0.8), 0 0 20px rgba(0, 224, 186, 0.4);
+        }
+
+        /* Logo Flicker Animation */
+        @keyframes neon-flicker {
+            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+                opacity: 1;
+                filter: drop-shadow(0 0 10px #FF3483);
+            }
+            20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+                opacity: 0.35;
+                filter: none;
+            }
+        }
+
+        .logo-flicker {
+            animation: neon-flicker 5s infinite;
+        }
+
+        /* Glitch Effect */
+        .glitch-hover {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch-hover:hover::before,
+        .glitch-hover:hover::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch-hover:hover::before {
+            left: 2px;
+            text-shadow: -2px 0 #FF3483;
+            clip-path: inset(20% 0 30% 0);
+            animation: glitch-anim-1 0.3s infinite linear alternate-reverse;
+        }
+
+        .glitch-hover:hover::after {
+            left: -2px;
+            text-shadow: 2px 0 #00E0BA;
+            clip-path: inset(50% 0 10% 0);
+            animation: glitch-anim-2 0.3s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim-1 {
+            0% { clip-path: inset(10% 0 70% 0); }
+            100% { clip-path: inset(60% 0 15% 0); }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% { clip-path: inset(40% 0 25% 0); }
+            100% { clip-path: inset(5% 0 80% 0); }
+        }
+
+        /* Light Sweep Button Animation (Barrido de Luz) */
+        .btn-sweep {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-sweep::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -150%;
+            width: 80%;
+            height: 200%;
+            background: linear-gradient(
+                60deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.45) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(25deg);
+            transition: all 0.75s ease;
+        }
+
+        .btn-sweep:hover::after {
+            left: 170%;
+        }
+
+        /* Scanline Overlay */
+        .scanlines {
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.25) 50%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+
+        /* Terminal Cursor */
+        .cursor-blink {
+            display: inline-block;
+            width: 9px;
+            height: 1.1em;
+            background-color: var(--color-accent);
+            animation: blink 0.9s infinite;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #08070C;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00E0BA;
+            border-radius: 2px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF3483;
+        }
+    </style>
+</head>
+<body class="bg-cyberDark text-slate-100 min-h-screen relative selection:bg-cyberPink selection:text-white">
+
+    <!-- Scanline effect overlay -->
+    <div class="fixed inset-0 scanlines z-40 pointer-events-none"></div>
+
+    <!-- HUD Status Top Bar -->
+    <aside aria-label="Estado del Sistema" class="w-full bg-[#050408] border-b border-cyberCyan/20 text-[11px] font-mono py-1 px-4 text-cyberCyan/70 flex justify-between items-center z-50">
+        <div class="flex items-center gap-3">
+            <span class="flex h-2 w-2 relative">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyberCyan opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-cyberCyan"></span>
+            </span>
+            <span class="hidden sm:inline">NODO_CENTRAL // MADRID_CYBERPUNK</span>
+            <span class="text-cyberPink font-bold">ESTADO: ONLINE</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="text-cyberYellow font-mono">PROTOCOLO: NEURAL-BOOK v2.8</span>
+            <span id="system-time" class="hidden md:inline font-mono text-slate-400">00:00:00 UTC</span>
+        </div>
+    </aside>
+
+    <!-- Navbar HUD -->
+    <header class="sticky top-0 z-40 bg-cyberDark/90 backdrop-blur-md border-b-2 border-cyberCyan/40 shadow-[0_4px_25px_rgba(0,224,186,0.15)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo with Cyberpunk Neon Flicker -->
+            <a href="#hero" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 border-2 border-cyberCyan bg-cyberCard flex items-center justify-center cyber-clip rotate-3 group-hover:rotate-0 transition-transform">
+                    <span class="font-superellipse text-cyberPink font-bold text-xl">M</span>
+                </div>
+                <div>
+                    <span class="font-superellipse text-lg sm:text-xl font-bold tracking-wider text-cyberPink logo-flicker">
+                        MÓNICA <span class="text-cyberCyan">&amp; SUS LIBROS</span>
+                    </span>
+                    <span class="block text-[9px] font-mono tracking-widest text-cyberYellow/80 uppercase">
+                        // Archivo Literario Distópico
+                    </span>
+                </div>
+            </a>
+
+            <!-- Action Button / Cart Trigger -->
+            <div class="flex items-center gap-3">
+                <button id="cart-toggle-btn" class="cyber-clip-btn bg-cyberYellow hover:bg-yellow-400 text-cyberDark font-bold px-4 py-2 flex items-center gap-2 text-xs uppercase tracking-wider font-chakra transition-all neon-shadow-yellow btn-sweep">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                    <span>CARRITO</span>
+                    <span id="cart-counter" class="bg-cyberDark text-cyberYellow text-[11px] px-1.5 py-0.5 rounded-sm font-mono font-bold">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+    <!-- Section 1: Hero ("El Portal Literario") -->
+    <section id="hero" class="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-16 px-4">
+        <!-- 60% Dominant Rosa Neón Glow & Gradients -->
+        <div class="absolute inset-0 bg-gradient-to-b from-cyberPink/20 via-cyberDark/90 to-cyberDark pointer-events-none"></div>
+        
+        <!-- Ambient Rosa Neón Spheres -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-cyberPink/25 rounded-full blur-[140px] pointer-events-none"></div>
+        <div class="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-cyberCyan/20 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <!-- 30% Secondary Perspective Grid in Cyan -->
+        <div class="perspective-grid"></div>
+
+        <!-- HUD Corner Tech Lines -->
+        <div class="absolute top-8 left-8 hidden lg:block border-l-2 border-t-2 border-cyberCyan w-24 h-24 pointer-events-none">
+            <span class="text-[10px] font-mono text-cyberCyan absolute top-1 left-2">SYS_INIT // 01</span>
+        </div>
+        <div class="absolute top-8 right-8 hidden lg:block border-r-2 border-t-2 border-cyberPink w-24 h-24 pointer-events-none">
+            <span class="text-[10px] font-mono text-cyberPink absolute top-1 right-2">SEC_PORTAL // 60%</span>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto text-center space-y-8">
+            
+            <!-- Tech Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 border border-cyberCyan/60 bg-cyberDark/80 cyber-clip text-xs font-mono tracking-widest text-cyberCyan">
+                <span class="w-2 h-2 bg-cyberPink animate-ping rounded-full inline-block"></span>
+                <span>BIENVENIDO AL PORTAL LITERARIO CUÁNTICO</span>
+            </div>
+
+            <!-- Main Glitch Title (Superellipse Style) -->
+            <h1 class="font-superellipse text-3xl sm:text-5xl md:text-6xl font-bold tracking-wider uppercase text-white leading-tight">
+                MÓNICA Y SUS LIBROS: <br>
+                <span class="text-cyberPink glitch-hover neon-text-pink" data-text="LITERATURA DEL MAÑANA">
+                    LITERATURA DEL MAÑANA
+                </span>
+            </h1>
+
+            <!-- Typing Terminal Subtitle -->
+            <div class="max-w-2xl mx-auto min-h-[56px] bg-cyberCard/80 border border-cyberCyan/30 p-4 cyber-clip backdrop-blur-sm">
+                <p class="font-modern text-sm sm:text-base text-slate-300">
+                    <span class="text-cyberPink font-mono font-bold">&gt;&gt;</span> 
+                    <span id="terminal-typewriter"></span><span class="cursor-blink"></span>
+                </p>
+            </div>
+
+            <!-- Call To Action (10% Electric Yellow) -->
+            <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-5">
+                <a href="#destacados" class="cyber-clip-btn bg-cyberYellow hover:bg-yellow-300 text-cyberDark font-chakra font-bold text-base px-8 py-4 uppercase tracking-wider transition-all duration-300 neon-shadow-yellow btn-sweep flex items-center gap-3">
+                    <span>EXPLORAR CATÁLOGO</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+                
+                <a href="#autores" class="cyber-clip-btn border-2 border-cyberCyan text-cyberCyan hover:bg-cyberCyan/15 font-chakra font-bold text-base px-7 py-3.5 uppercase tracking-wider transition-all duration-300 flex items-center gap-2">
+                    <span>RED DE AUTORES</span>
+                    <span class="text-cyberPink text-xs">&gt;</span>
+                </a>
+            </div>
+
+            <!-- Quick Telemetry Bar -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 max-w-3xl mx-auto text-left font-mono text-xs">
+                <div class="border-l-2 border-cyberPink pl-3 py-1 bg-cyberCard/40">
+                    <div class="text-slate-400">EJEMPLARES FÍSICOS</div>
+                    <div class="text-cyberPink font-superellipse font-bold text-base">4,280+</div>
+                </div>
+                <div class="border-l-2 border-cyberCyan pl-3 py-1 bg-cyberCard/40">
+                    <div class="text-slate-400">NEURO-HOLOGRAMAS</div>
+                    <div class="text-cyberCyan font-superellipse font-bold text-base">1,120+</div>
+                </div>
+                <div class="border-l-2 border-cyberYellow pl-3 py-1 bg-cyberCard/40">
+                    <div class="text-slate-400">AUTORES ACTIVOS</div>
+                    <div class="text-cyberYellow font-superellipse font-bold text-base">380+</div>
+                </div>
+                <div class="border-l-2 border-cyberCyan pl-3 py-1 bg-cyberCard/40">
+                    <div class="text-slate-400">DESPACHO CUÁNTICO</div>
+                    <div class="text-slate-200 font-superellipse font-bold text-base">&lt; 24 HORAS</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Section 2: Libros Más Destacados ("Archivos Destacados") -->
+    <section id="destacados" class="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between border-b-2 border-cyberCyan/40 pb-6 mb-12">
+            <div>
+                <div class="text-xs font-mono text-cyberCyan tracking-widest uppercase mb-1">
+                    // REPOSITORIO DE DATOS LITERARIOS
+                </div>
+                <h2 class="font-superellipse text-2xl sm:text-4xl font-bold uppercase text-white tracking-wide">
+                    ARCHIVOS <span class="text-cyberPink neon-text-pink">DESTACADOS</span>
+                </h2>
+            </div>
+            
+            <!-- Category Filter Buttons (Interactive JS) -->
+            <div class="flex flex-wrap gap-2 mt-4 md:mt-0 font-mono text-xs">
+                <button onclick="filterBooks('todos')" class="filter-btn active px-3 py-1.5 cyber-clip-tag bg-cyberCyan text-cyberDark font-bold transition-all" data-genre="todos">TODOS</button>
+                <button onclick="filterBooks('cyberpunk')" class="filter-btn px-3 py-1.5 cyber-clip-tag bg-cyberCard border border-cyberCyan/50 text-slate-300 hover:text-cyberCyan transition-all" data-genre="cyberpunk">CYBERPUNK</button>
+                <button onclick="filterBooks('distopia')" class="filter-btn px-3 py-1.5 cyber-clip-tag bg-cyberCard border border-cyberCyan/50 text-slate-300 hover:text-cyberCyan transition-all" data-genre="distopia">DISTOPÍA</button>
+                <button onclick="filterBooks('cuantica')" class="filter-btn px-3 py-1.5 cyber-clip-tag bg-cyberCard border border-cyberCyan/50 text-slate-300 hover:text-cyberCyan transition-all" data-genre="cuantica">CUÁNTICA</button>
+            </div>
+        </div>
+
+        <!-- Book Cards Grid -->
+        <div id="books-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <!-- Book 1 -->
+            <article class="book-card group bg-cyberCard border-2 border-cyberCyan/60 hover:border-cyberPink transition-all duration-300 cyber-clip flex flex-col justify-between overflow-hidden shadow-[0_4px_20px_rgba(0,224,186,0.15)] hover:shadow-[0_8px_30px_rgba(255,52,131,0.3)] hover:-translate-y-1.5" data-category="cyberpunk">
+                <div class="relative overflow-hidden aspect-[3/4] bg-cyberMuted">
+                    <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=700&q=80" alt="Crónicas de Neón" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-90 contrast-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-cyberCard via-transparent to-transparent"></div>
+                    <span class="absolute top-3 right-3 bg-cyberYellow text-cyberDark text-[10px] font-chakra font-bold px-2 py-0.5 cyber-clip-tag uppercase tracking-wider neon-shadow-yellow">
+                        BESTSELLER
+                    </span>
+                    <span class="absolute bottom-3 left-3 text-[11px] font-mono text-cyberCyan bg-cyberDark/80 px-2 py-0.5 border border-cyberCyan/30">
+                        #CYBERPUNK
+                    </span>
+                </div>
+                <div class="p-5 flex flex-col flex-grow justify-between space-y-4">
+                    <div>
+                        <h3 class="font-superellipse text-base font-bold text-white group-hover:text-cyberPink transition-colors leading-snug">
+                            CRÓNICAS DE NEÓN Y SOMBRAS
+                        </h3>
+                        <p class="font-modern text-xs text-cyberCyan/90 font-medium mt-1">Por Valeria Vance</p>
+                        <p class="font-modern text-xs text-slate-400 mt-2 line-clamp-2">
+                            Una detective neuronal investiga memorias robadas en los callejones del bajo Neo-Tokio.
+                        </p>
+                    </div>
+                    <div class="pt-3 border-t border-cyberCyan/20 flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] font-mono text-slate-400 block">PRECIO NEURAL</span>
+                            <span class="font-superellipse text-cyberYellow font-bold text-lg">24.50 €</span>
+                        </div>
+                        <button disabled class="cyber-clip-btn bg-slate-800/80 text-slate-500 border border-slate-700 text-xs font-chakra font-bold px-3 py-2 uppercase tracking-wide cursor-not-allowed opacity-50" title="Botón del carrito anulado">
+                            ADQUIRIR COPIA (ANULADO)
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Book 2 -->
+            <article class="book-card group bg-cyberCard border-2 border-cyberCyan/60 hover:border-cyberPink transition-all duration-300 cyber-clip flex flex-col justify-between overflow-hidden shadow-[0_4px_20px_rgba(0,224,186,0.15)] hover:shadow-[0_8px_30px_rgba(255,52,131,0.3)] hover:-translate-y-1.5" data-category="distopia">
+                <div class="relative overflow-hidden aspect-[3/4] bg-cyberMuted">
+                    <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=700&q=80" alt="La Última Frecuencia" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-90 contrast-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-cyberCard via-transparent to-transparent"></div>
+                    <span class="absolute top-3 right-3 bg-cyberPink text-white text-[10px] font-chakra font-bold px-2 py-0.5 cyber-clip-tag uppercase tracking-wider neon-shadow-pink">
+                        NUEVO
+                    </span>
+                    <span class="absolute bottom-3 left-3 text-[11px] font-mono text-cyberCyan bg-cyberDark/80 px-2 py-0.5 border border-cyberCyan/30">
+                        #DISTOPÍA
+                    </span>
+                </div>
+                <div class="p-5 flex flex-col flex-grow justify-between space-y-4">
+                    <div>
+                        <h3 class="font-superellipse text-base font-bold text-white group-hover:text-cyberPink transition-colors leading-snug">
+                            LA ÚLTIMA FRECUENCIA
+                        </h3>
+                        <p class="font-modern text-xs text-cyberCyan/90 font-medium mt-1">Por Kaelen Thorne</p>
+                        <p class="font-modern text-xs text-slate-400 mt-2 line-clamp-2">
+                            En un planeta donde la música está prohibida por algoritmos estatales, una rebelión surge en 432 Hz.
+                        </p>
+                    </div>
+                    <div class="pt-3 border-t border-cyberCyan/20 flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] font-mono text-slate-400 block">PRECIO NEURAL</span>
+                            <span class="font-superellipse text-cyberYellow font-bold text-lg">19.99 €</span>
+                        </div>
+                        <button disabled class="cyber-clip-btn bg-slate-800/80 text-slate-500 border border-slate-700 text-xs font-chakra font-bold px-3 py-2 uppercase tracking-wide cursor-not-allowed opacity-50" title="Botón del carrito anulado">
+                            ADQUIRIR COPIA (ANULADO)
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Book 3 -->
+            <article class="book-card group bg-cyberCard border-2 border-cyberCyan/60 hover:border-cyberPink transition-all duration-300 cyber-clip flex flex-col justify-between overflow-hidden shadow-[0_4px_20px_rgba(0,224,186,0.15)] hover:shadow-[0_8px_30px_rgba(255,52,131,0.3)] hover:-translate-y-1.5" data-category="cuantica">
+                <div class="relative overflow-hidden aspect-[3/4] bg-cyberMuted">
+                    <img src="https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?auto=format&fit=crop&w=700&q=80" alt="Ecos del Multiverso" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-90 contrast-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-cyberCard via-transparent to-transparent"></div>
+                    <span class="absolute top-3 right-3 bg-cyberYellow text-cyberDark text-[10px] font-chakra font-bold px-2 py-0.5 cyber-clip-tag uppercase tracking-wider neon-shadow-yellow">
+                        BESTSELLER
+                    </span>
+                    <span class="absolute bottom-3 left-3 text-[11px] font-mono text-cyberCyan bg-cyberDark/80 px-2 py-0.5 border border-cyberCyan/30">
+                        #CUÁNTICA
+                    </span>
+                </div>
+                <div class="p-5 flex flex-col flex-grow justify-between space-y-4">
+                    <div>
+                        <h3 class="font-superellipse text-base font-bold text-white group-hover:text-cyberPink transition-colors leading-snug">
+                            ECOS DEL MULTIVERSO
+                        </h3>
+                        <p class="font-modern text-xs text-cyberCyan/90 font-medium mt-1">Por Dr. Isaac Chen</p>
+                        <p class="font-modern text-xs text-slate-400 mt-2 line-clamp-2">
+                            Viajeros temporales atrapados en una paradoja cuántica deben reconciliar infinitas versiones de sí mismos.
+                        </p>
+                    </div>
+                    <div class="pt-3 border-t border-cyberCyan/20 flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] font-mono text-slate-400 block">PRECIO NEURAL</span>
+                            <span class="font-superellipse text-cyberYellow font-bold text-lg">28.00 €</span>
+                        </div>
+                        <button disabled class="cyber-clip-btn bg-slate-800/80 text-slate-500 border border-slate-700 text-xs font-chakra font-bold px-3 py-2 uppercase tracking-wide cursor-not-allowed opacity-50" title="Botón del carrito anulado">
+                            ADQUIRIR COPIA (ANULADO)
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Book 4 -->
+            <article class="book-card group bg-cyberCard border-2 border-cyberCyan/60 hover:border-cyberPink transition-all duration-300 cyber-clip flex flex-col justify-between overflow-hidden shadow-[0_4px_20px_rgba(0,224,186,0.15)] hover:shadow-[0_8px_30px_rgba(255,52,131,0.3)] hover:-translate-y-1.5" data-category="cyberpunk">
+                <div class="relative overflow-hidden aspect-[3/4] bg-cyberMuted">
+                    <img src="https://images.unsplash.com/photo-1532012164546-f432f2e3777f?auto=format&fit=crop&w=700&q=80" alt="Sintética: El Manifiesto" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-90 contrast-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-cyberCard via-transparent to-transparent"></div>
+                    <span class="absolute top-3 right-3 bg-cyberCyan text-cyberDark text-[10px] font-chakra font-bold px-2 py-0.5 cyber-clip-tag uppercase tracking-wider neon-shadow-cyan">
+                        EDICIÓN COLECTOR
+                    </span>
+                    <span class="absolute bottom-3 left-3 text-[11px] font-mono text-cyberCyan bg-cyberDark/80 px-2 py-0.5 border border-cyberCyan/30">
+                        #CYBERPUNK
+                    </span>
+                </div>
+                <div class="p-5 flex flex-col flex-grow justify-between space-y-4">
+                    <div>
+                        <h3 class="font-superellipse text-base font-bold text-white group-hover:text-cyberPink transition-colors leading-snug">
+                            SINTÉTICA: EL MANIFIESTO
+                        </h3>
+                        <p class="font-modern text-xs text-cyberCyan/90 font-medium mt-1">Por Lyra Blackwood</p>
+                        <p class="font-modern text-xs text-slate-400 mt-2 line-clamp-2">
+                            La primera novela escrita en colaboración con una conciencia sintética autónoma rebelada.
+                        </p>
+                    </div>
+                    <div class="pt-3 border-t border-cyberCyan/20 flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] font-mono text-slate-400 block">PRECIO NEURAL</span>
+                            <span class="font-superellipse text-cyberYellow font-bold text-lg">22.90 €</span>
+                        </div>
+                        <button disabled class="cyber-clip-btn bg-slate-800/80 text-slate-500 border border-slate-700 text-xs font-chakra font-bold px-3 py-2 uppercase tracking-wide cursor-not-allowed opacity-50" title="Botón del carrito anulado">
+                            ADQUIRIR COPIA (ANULADO)
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+
+    </section>
+
+    <!-- Section 3: Escritores de Moda ("Mentes Maestras / Autores en Tendencia") -->
+    <section id="autores" class="relative py-24 bg-gradient-to-b from-transparent via-cyberPink/10 to-transparent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <div class="inline-block text-xs font-mono text-cyberYellow tracking-widest uppercase px-3 py-1 bg-cyberDark border border-cyberYellow/40 cyber-clip-tag mb-3">
+                    // RED NEURAL DE AUTORES EN TENDENCIA
+                </div>
+                <h2 class="font-superellipse text-2xl sm:text-4xl font-bold uppercase text-white tracking-wide">
+                    MENTES <span class="text-cyberCyan neon-text-cyan">MAESTRAS</span>
+                </h2>
+                <p class="font-modern text-slate-400 text-sm mt-3">
+                    Conectores cognitivos y narradores distópicos que definen la vanguardia de la literatura del siglo XXII.
+                </p>
+            </div>
+
+            <!-- Authors Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Author 1 -->
+                <div class="bg-cyberCard border border-cyberCyan/50 hover:border-cyberPink transition-all duration-300 cyber-clip p-6 relative group hover:shadow-[0_0_25px_rgba(255,52,131,0.25)]">
+                    <div class="absolute top-3 right-3 text-[10px] font-mono text-cyberCyan">
+                        ID: #AUTH-0091
+                    </div>
+                    <!-- Hexagonal/Bisel Portrait Container with Duotone styling -->
+                    <div class="relative w-28 h-28 mx-auto mb-6">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-cyberPink to-cyberCyan rounded-none cyber-clip opacity-75 group-hover:opacity-100 blur-sm transition-opacity"></div>
+                        <div class="relative w-full h-full cyber-clip bg-cyberDark overflow-hidden border border-cyberCyan">
+                            <img src="https://images.unsplash.com/photo-1554066756-008785d9bb94?auto=format&fit=crop&w=600&q=80" alt="Gato Siamés" class="w-full h-full object-cover filter contrast-125 saturate-150">
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="font-superellipse text-lg font-bold text-white uppercase group-hover:text-cyberPink transition-colors">
+                            VALERIA VANCE
+                        </h3>
+                        <span class="text-xs font-mono text-cyberYellow block mt-0.5">ESPECIALIDAD: CIBER-THRILLER</span>
+                        <p class="font-modern text-xs text-slate-300 mt-4 leading-relaxed text-left">
+                            Ex-arquitecta de redes de memoria en Neo-Singapur convertida en novelista de culto. Explora la identidad humana en la era posbiológica.
+                        </p>
+                        <div class="mt-4 pt-4 border-t border-cyberCyan/20 text-left">
+                            <span class="text-[10px] font-mono text-slate-400 block">OBRA MÁS VENDIDA:</span>
+                            <span class="font-superellipse text-xs text-cyberCyan">Crónicas de Neón y Sombras</span>
+                        </div>
+                        <!-- RPG Stats -->
+                        <div class="mt-4 space-y-2 text-left font-mono text-[11px]">
+                            <div>
+                                <div class="flex justify-between text-slate-400 mb-1">
+                                    <span>NIVEL DE IMAGINACIÓN:</span>
+                                    <span class="text-cyberPink font-bold">99%</span>
+                                </div>
+                                <div class="w-full bg-cyberDark h-1.5 border border-cyberPink/40">
+                                    <div class="bg-cyberPink h-full" style="width: 99%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-slate-400 mb-1">
+                                    <span>OBRAS PUBLICADAS:</span>
+                                    <span class="text-cyberYellow font-bold">12 VOLS.</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-slate-400 mb-1">
+                                    <span>SINCRONIZACIÓN NEURAL:</span>
+                                    <span class="text-cyberCyan font-bold">96%</span>
+                                </div>
+                                <div class="w-full bg-cyberDark h-1.5 border border-cyberCyan/40">
+                                    <div class="bg-cyberCyan h-full" style="width: 96%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Author 2 -->
+                <div class="bg-cyberCard border border-cyberCyan/50 hover:border-cyberPink transition-all duration-300 cyber-clip p-6 relative group hover:shadow-[0_0_25px_rgba(255,52,131,0.25)]">
+                    <div class="absolute top-3 right-3 text-[10px] font-mono text-cyberCyan">
+                        ID: #AUTH-0143
+                    </div>
+                    <div class="relative w-28 h-28 mx-auto mb-6">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-cyberCyan to-cyberYellow rounded-none cyber-clip opacity-75 group-hover:opacity-100 blur-sm transition-opacity"></div>
+                        <div class="relative w-full h-full cyber-clip bg-cyberDark overflow-hidden border border-cyberCyan">
+                            <img src="https://images.unsplash.com/photo-1568576186920-ce8e14efac73?auto=format&fit=crop&w=600&q=80" alt="Gato Tabby" class="w-full h-full object-cover filter contrast-125 saturate-150">
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="font-superellipse text-lg font-bold text-white uppercase group-hover:text-cyberPink transition-colors">
+                            KAELEN THORNE
+                        </h3>
+                        <span class="text-xs font-mono text-cyberYellow block mt-0.5">ESPECIALIDAD: DISTOPÍA RADICAL</span>
+                        <p class="font-modern text-xs text-slate-300 mt-4 leading-relaxed text-left">
+                            Activista de frecuencias sonoras analógicas. Sus manifiestos narrativos han inspirado movimientos subterráneos en tres continentes.
+                        </p>
+                        <div class="mt-4 pt-4 border-t border-cyberCyan/20 text-left">
+                            <span class="text-[10px] font-mono text-slate-400 block">OBRA MÁS VENDIDA:</span>
+                            <span class="font-superellipse text-xs text-cyberCyan">La Última Frecuencia</span>
+                        </div>
+                        <!-- RPG Stats -->
+                        <div class="mt-4 space-y-2 text-left font-mono text-[11px]">
+                            <div>
+                                <div class="flex justify-between text-slate-400 mb-1">
+                                    <span>NIVEL DE IMAGINACIÓN:</span>
+                                    <span class="text-cyberPink font-bold">94%</span>
+                                </div>
+                                <div class="w-full bg-cyberDark h-1.5 border border-cyberPink/40">
+                                    <div class="bg-cyberPink h-full" style="width: 94%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-slate-400 mb-1">
+                                    <span>OBRAS PUBLICADAS:</span>
+                                    <span class="text-cyberYellow font-bold">8 VOLS.</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-slate-400 mb-1">
+                                    <span>RESISTENCIA DISTÓPICA:</span>
+                                    <span class="text-cyberCyan font-bold">98%</span>
+                                </div>
+                                <div class="w-full bg-cyberDark h-1.5 border border-cyberCyan/40">
+                                    <div class="bg-cyberCyan h-full" style="width: 98%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Author 3 -->
+                <div class="bg-cyberCard border border-cyberCyan/50 hover:border-cyberPink transition-all duration-300 cyber-clip p-6 relative group hover:shadow-[0_0_25px_rgba(255,52,131,0.25)]">
+                    <div class="absolute top-3 right-3 text-[10px] font-mono text-cyberCyan">
+                        ID: #AUTH-0277
+                    </div>
+                    <div class="relative w-28 h-28 mx-auto mb-6">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-cyberPink to-cyberYellow rounded-none cyber-clip opacity-75 group-hover:opacity-100 blur-sm transition-opacity"></div>
+                        <div class="relative w-full h-full cyber-clip bg-cyberDark overflow-hidden border border-cyberCyan">
+                            <img src="https://images.unsplash.com/photo-1614538899890-1a0d25d62e22?auto=format&fit=crop&w=600&q=80" alt="Gato Persa" class="w-full h-full object-cover filter contrast-125 saturate-150">
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="font-superellipse text-lg font-bold text-white uppercase group-hover:text-cyberPink transition-colors">
+                            LYRA BLACKWOOD
+                        </h3>
+                        <span class="text-xs font-mono text-cyberYellow block mt-0.5">ESPECIALIDAD: COGNICIÓN SINTÉTICA</span>
+                        <p class="font-modern text-xs text-slate-300 mt-4 leading-relaxed text-left">
+                            Pionera en narrativas híbridas orgánicas-algorítmicas galardonada con el Premio Nebula Cuántico del Gran Nodo.
+                        </p>
+                        <div class="mt-4 pt-4 border-t border-cyberCyan/20 text-left">
+                            <span class="text-[10px] font-mono text-slate-400 block">OBRA MÁS VENDIDA:</span>
+                            <span class="font-superellipse text-xs text-cyberCyan">Sintética: El Manifiesto</span>
+                        </div>
+                        <!-- RPG Stats -->
+                        <div class="mt-4 space-y-2 text-left font-mono text-[11px]">
+                            <div>
+                                <div class="flex justify-between text-slate-400 mb-1">
+                                    <span>NIVEL DE IMAGINACIÓN:</span>
+                                    <span class="text-cyberPink font-bold">97%</span>
+                                </div>
+                                <div class="w-full bg-cyberDark h-1.5 border border-cyberPink/40">
+                                    <div class="bg-cyberPink h-full" style="width: 97%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-slate-400 mb-1">
+                                    <span>OBRAS PUBLICADAS:</span>
+                                    <span class="text-cyberYellow font-bold">15 VOLS.</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-slate-400 mb-1">
+                                    <span>COEFICIENTE SINTÉTICO:</span>
+                                    <span class="text-cyberCyan font-bold">95%</span>
+                                </div>
+                                <div class="w-full bg-cyberDark h-1.5 border border-cyberCyan/40">
+                                    <div class="bg-cyberCyan h-full" style="width: 95%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Section: Newsletter Terminal Hub -->
+    <section id="terminal" class="py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+        <div class="bg-cyberCard border-2 border-cyberCyan cyber-clip p-6 sm:p-10 shadow-[0_0_30px_rgba(0,224,186,0.15)] relative overflow-hidden">
+            <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-cyberPink/20 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="flex items-center gap-2 mb-4 font-mono text-xs text-cyberCyan">
+                <span class="inline-block w-3 h-3 bg-cyberPink cyber-clip-tag"></span>
+                <span>COMANDO DE ENLACE // NEWSLETTER DIRECTA</span>
+            </div>
+            
+            <h2 class="font-superellipse text-xl sm:text-3xl font-bold uppercase text-white mb-3">
+                CONÉCTATE A LA <span class="text-cyberPink neon-text-pink">RED DE MÓNICA</span>
+            </h2>
+            <p class="font-modern text-slate-300 text-sm max-w-2xl mb-8">
+                Recibe semanalmente encriptaciones literarias, adelantos de lanzamientos distópicos y códigos de descuento exclusivos en créditos neurales.
+            </p>
+
+            <form id="newsletter-form" onsubmit="handleNewsletter(event)" class="flex flex-col sm:flex-row gap-4">
+                <div class="relative flex-grow">
+                    <input 
+                        type="email" 
+                        required 
+                        placeholder="tu_identificador@nodo.net" 
+                        class="w-full bg-cyberDark border-2 border-cyberCyan text-white px-4 py-3 cyber-clip font-mono text-sm focus:outline-none focus:border-cyberPink focus:shadow-[0_0_15px_rgba(255,52,131,0.4)] transition-all placeholder:text-slate-600"
+                    >
+                </div>
+                <button type="submit" class="cyber-clip-btn bg-cyberYellow hover:bg-yellow-300 text-cyberDark font-chakra font-bold px-6 py-3 uppercase tracking-wider text-sm neon-shadow-yellow btn-sweep whitespace-nowrap">
+                    ENLAZAR TERMINAL
+                </button>
+            </form>
+
+            <div id="newsletter-feedback" class="mt-4 font-mono text-xs text-cyberCyan hidden">
+                &gt;&gt; [CONEXIÓN ESTABLECIDA]: Tu frecuencia ha sido sincronizada satisfactoriamente.
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <!-- Footer Terminal -->
+    <footer class="border-t-2 border-cyberCyan/40 bg-[#050408] pt-12 pb-8 px-4 sm:px-6 lg:px-8 font-mono text-xs text-slate-400">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+            
+            <div class="space-y-3">
+                <div class="font-superellipse text-base text-cyberPink font-bold">
+                    MÓNICA &amp; SUS LIBROS
+                </div>
+                <p class="font-modern text-slate-400 text-xs">
+                    Librería independiente especializada en literatura distópica, ciencia ficción dura y narrativas cyberpunk.
+                </p>
+                <div class="text-[11px] text-cyberCyan">
+                    COORDENADAS: 40.4168° N, 3.7038° W
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-superellipse text-white text-xs uppercase mb-3 text-cyberYellow">
+                    // ENLACES RÁPIDOS
+                </h4>
+                <ul class="space-y-2">
+                    <li><a href="#hero" class="hover:text-cyberCyan transition-colors">[ INICIO_SISTEMA ]</a></li>
+                    <li><a href="#destacados" class="hover:text-cyberCyan transition-colors">[ ARCHIVOS_DESTACADOS ]</a></li>
+                    <li><a href="#autores" class="hover:text-cyberCyan transition-colors">[ RED_AUTORES ]</a></li>
+                    <li><a href="#terminal" class="hover:text-cyberCyan transition-colors">[ ENLACE_TERMINAL ]</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-superellipse text-white text-xs uppercase mb-3 text-cyberYellow">
+                    // GÉNEROS NEURALES
+                </h4>
+                <ul class="space-y-2">
+                    <li><span class="text-cyberPink">&gt;</span> Ciberpunk Urbano</li>
+                    <li><span class="text-cyberPink">&gt;</span> Distopía Algorítmica</li>
+                    <li><span class="text-cyberPink">&gt;</span> Fantasía Cuántica</li>
+                    <li><span class="text-cyberPink">&gt;</span> Manifiestos Sintéticos</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-superellipse text-white text-xs uppercase mb-3 text-cyberYellow">
+                    // SEGURIDAD &amp; RED
+                </h4>
+                <div class="bg-cyberDark p-3 border border-cyberCyan/30 cyber-clip text-[11px] space-y-1">
+                    <div class="text-cyberCyan">ENCRIPTACIÓN: AES-512-QUANTUM</div>
+                    <div class="text-slate-500">SERVIDOR: nodo-07.cybermadrid.es</div>
+                    <div class="text-cyberPink">INTEGRIDAD: 100% OK</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="max-w-7xl mx-auto pt-6 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+            <div>
+                &copy; 2084 MÓNICA Y SUS LIBROS. TODOS LOS DERECHOS DE TRANSMISIÓN RESERVADOS.
+            </div>
+            <div class="text-cyberCyan/70">
+                DISEÑADO CON ESTÉTICA CIBERPUNK 60-30-10
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Drawer (Off-Canvas Modal) -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden pointer-events-none transition-opacity duration-300 opacity-0">
+        <div id="cart-overlay" onclick="toggleCart()" class="absolute inset-0 bg-black/75 backdrop-blur-sm pointer-events-auto"></div>
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div id="cart-panel" class="w-screen max-w-md bg-cyberCard border-l-2 border-cyberCyan p-6 flex flex-col justify-between pointer-events-auto transform translate-x-full transition-transform duration-300 cyber-clip">
+                
+                <div>
+                    <div class="flex items-center justify-between pb-4 border-b border-cyberCyan/30">
+                        <div class="flex items-center gap-2">
+                            <span class="font-superellipse text-cyberPink text-lg font-bold">CARRITO CUÁNTICO</span>
+                        </div>
+                        <button onclick="toggleCart()" class="text-slate-400 hover:text-cyberPink font-mono text-xl p-1">
+                            &#x2715;
+                        </button>
+                    </div>
+
+                    <!-- Cart Item List -->
+                    <div id="cart-items" class="mt-6 space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+                        <p id="empty-cart-msg" class="text-slate-400 font-mono text-xs text-center py-10">
+                            [ BANDEJA VACÍA // NINGÚN ARCHIVO ADQUIRIDO ]
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Cart Total and Checkout -->
+                <div class="border-t border-cyberCyan/30 pt-4 space-y-4">
+                    <div class="flex justify-between items-center font-mono">
+                        <span class="text-slate-400 text-sm">TOTAL CRÉDITOS:</span>
+                        <span id="cart-total" class="font-superellipse text-cyberYellow text-xl font-bold">0.00 €</span>
+                    </div>
+                    <button disabled class="w-full cyber-clip-btn bg-slate-800/80 text-slate-500 border border-slate-700 font-chakra font-bold py-3.5 uppercase tracking-wider text-sm cursor-not-allowed opacity-50" title="Botón del carrito anulado">
+                        TRANSMITIR PAGO (ANULADO)
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- HUD Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-50 space-y-2 pointer-events-none"></div>
+
+    <!-- Scripting for Interactivity -->
+    <script>
+        // 1. Clock Update
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toTimeString().split(' ')[0] + ' CET';
+            const el = document.getElementById('system-time');
+            if (el) el.textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // 2. Typing Terminal Effect in Hero
+        const messages = [
+            "Explora narrativas distópicas, ciencia ficción dura y mundos alternativos.",
+            "Archivos literarios codificados para lectores del siglo XXII.",
+            "Acceso directo a las mentes maestras más influyentes del ciberespacio."
+        ];
+        let msgIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typewriterEl = document.getElementById('terminal-typewriter');
+
+        function typeLoop() {
+            const currentMsg = messages[msgIndex];
+            if (isDeleting) {
+                typewriterEl.textContent = currentMsg.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typewriterEl.textContent = currentMsg.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 30 : 60;
+
+            if (!isDeleting && charIndex === currentMsg.length) {
+                typeSpeed = 2200; // Pause at end of sentence
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                msgIndex = (msgIndex + 1) % messages.length;
+                typeSpeed = 400; // Pause before typing next sentence
+            }
+
+            setTimeout(typeLoop, typeSpeed);
+        }
+        document.addEventListener('DOMContentLoaded', typeLoop);
+
+        // 3. Category Filter
+        function filterBooks(genre) {
+            const cards = document.querySelectorAll('.book-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            buttons.forEach(btn => {
+                if (btn.dataset.genre === genre) {
+                    btn.classList.add('bg-cyberCyan', 'text-cyberDark', 'font-bold');
+                    btn.classList.remove('bg-cyberCard', 'text-slate-300');
+                } else {
+                    btn.classList.remove('bg-cyberCyan', 'text-cyberDark', 'font-bold');
+                    btn.classList.add('bg-cyberCard', 'text-slate-300');
+                }
+            });
+
+            cards.forEach(card => {
+                if (genre === 'todos' || card.dataset.category === genre) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // 4. Shopping Cart State & Management
+        let cart = [];
+
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            const panel = document.getElementById('cart-panel');
+            const isClosed = panel.classList.contains('translate-x-full');
+
+            if (isClosed) {
+                drawer.classList.remove('opacity-0', 'pointer-events-none');
+                panel.classList.remove('translate-x-full');
+            } else {
+                panel.classList.add('translate-x-full');
+                drawer.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        document.getElementById('cart-toggle-btn').addEventListener('click', toggleCart);
+
+        function addToCart(title, price) {
+            showToast(`[!] AVISO: Botón del carrito anulado para "${title}"`);
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            renderCart();
+        }
+
+        function renderCart() {
+            const counter = document.getElementById('cart-counter');
+            const itemsContainer = document.getElementById('cart-items');
+            const totalEl = document.getElementById('cart-total');
+
+            counter.textContent = cart.length;
+
+            if (cart.length === 0) {
+                itemsContainer.innerHTML = '<p class="text-slate-400 font-mono text-xs text-center py-10">[ BANDEJA VACÍA // NINGÚN ARCHIVO ADQUIRIDO ]</p>';
+                totalEl.textContent = '0.00 €';
+                return;
+            }
+
+            let total = 0;
+            itemsContainer.innerHTML = '';
+
+            cart.forEach(item => {
+                total += item.price;
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between p-3 bg-cyberDark border border-cyberCyan/40 cyber-clip';
+                div.innerHTML = `
+                    <div>
+                        <div class="font-superellipse text-xs text-white">${item.title}</div>
+                        <div class="font-mono text-[11px] text-cyberYellow mt-0.5">${item.price.toFixed(2)} €</div>
+                    </div>
+                    <button onclick="removeFromCart(${item.id})" class="text-cyberPink hover:text-red-400 text-xs font-mono p-1">
+                        [ELIMINAR]
+                    </button>
+                `;
+                itemsContainer.appendChild(div);
+            });
+
+            totalEl.textContent = total.toFixed(2) + ' €';
+        }
+
+        function checkoutCart() {
+            showToast("ALERTA: El botón de pago del carrito está anulado.");
+        }
+
+        // 5. Toast Feedback Notifications
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'cyber-clip bg-cyberDark border-2 border-cyberCyan text-cyberCyan font-mono text-xs px-4 py-3 shadow-[0_0_15px_rgba(0,224,186,0.5)] transition-all duration-300 transform translate-y-4 opacity-0 pointer-events-auto';
+            toast.textContent = message;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-4', 'opacity-0');
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // 6. Newsletter Subscription Handler
+        function handleNewsletter(e) {
+            e.preventDefault();
+            const feedback = document.getElementById('newsletter-feedback');
+            feedback.classList.remove('hidden');
+            showToast(">> TERMINAL SINCRONIZADA CON ÉXITO");
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
